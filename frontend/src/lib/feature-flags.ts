@@ -205,6 +205,9 @@ export const useFeatureFlags = (flagNames: string[]) => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<string | null>(null);
   
+  // Extract flagNamesKey to separate variable for ESLint compliance
+  const flagNamesKey = React.useMemo(() => flagNames.join(','), [flagNames]);
+  
   React.useEffect(() => {
     let mounted = true;
     
@@ -248,7 +251,7 @@ export const useFeatureFlags = (flagNames: string[]) => {
     return () => {
       mounted = false;
     };
-  }, [flagNames.join(',')]);
+  }, [flagNames, flagNamesKey]);
   
   return { flags, loading, error };
 };
